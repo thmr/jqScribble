@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 function jqScribbleBrush()
 {
-	jqScribbleBrush.prototype._init = function(context, brushSize, brushColor)
+	jqScribbleBrush.prototype._init = function(context, brushSize, brushColor, lineCap, lineJoin )
 	{
 		this.context = context;
 		this.context.globalCompositeOperation = 'source-over';
@@ -29,6 +29,9 @@ function jqScribbleBrush()
 		this.brushColor = brushColor;
 		this.drawn = false;
 		this.active = false;
+		this.context.lineCap = lineCap;
+		this.context.lineJoin = lineJoin;
+		
 	};
 	
 	//For custom brushes override this method and perform 
@@ -101,7 +104,9 @@ function BasicCanvasSave(imageData){window.open(imageData,'jqScribble Image');}
 		saveFunction: 		BasicCanvasSave,
 		brush:				BasicBrush,
 		brushSize:			2,
-		brushColor:			"rgb(0,0,0)"
+		brushColor:			"rgb(0,0,0)",
+		lineJoin: 			"round",
+		lineCap: 			"round"
 	};
 	
 	var brush = null;
@@ -155,7 +160,7 @@ function BasicCanvasSave(imageData){window.open(imageData,'jqScribble Image');}
 		}
 		
 		brush = new settings.brush();
-		brush._init(context, settings.brushSize, settings.brushColor);
+		brush._init(context, settings.brushSize, settings.brushColor, settings.lineCap, settings.lineJoin);
 		
 		var self = this;
 		
